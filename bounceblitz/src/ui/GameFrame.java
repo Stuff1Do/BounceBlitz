@@ -12,8 +12,7 @@ public class GameFrame extends JFrame{
 		setLocationRelativeTo(null); 
 		
 		
-		GamePanel panel = new GamePanel();
-		add(panel);
+		add(new GamePanel());
 		pack();
 		
         setVisible(true);   

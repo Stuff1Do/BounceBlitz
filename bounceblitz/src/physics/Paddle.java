@@ -5,7 +5,7 @@ import java.awt.*;
 public class Paddle {
    public int x, y, width  = 5, height = 60;
    public int dy;
-   private final int speed = 8;
+   
    
    public Paddle(int x, int y) {
 	   this.x  = x;
@@ -20,7 +20,7 @@ public class Paddle {
    public void move() {
        y += dy;
        if (y < 0) y = 0;
-       if (y > 480 - height) y = 480 - height;
+       if (y > 400) y = 350;
    }
 
    public void setDirection(int dy){
