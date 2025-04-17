@@ -1,8 +1,7 @@
 // File: main/BounceBlitz.java
 package main;
 
-import javax.swing.*;
-import ui.*;
+import ui.GameFrame;
 
 public class BounceBlitz {
     public static void main(String[] args) {
