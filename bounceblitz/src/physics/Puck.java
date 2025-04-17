@@ -1,14 +1,15 @@
 package physics;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Puck {
     public int x, y, radius = 15;
-    public int dx = 5, dy = 5;
+    public int dx, dy;
+    private Random random = new Random();
 
     public Puck(int startX, int startY) {
-        this.x = startX;
-        this.y = startY;
+        resetPosition(startX, startY); // 
     }
 
     public void move() {
@@ -16,13 +17,13 @@ public class Puck {
         y += dy;
 
         // Bounce off top and bottom
-        if (y <= 0 || y >= 480 - radius) {
+        if (y <= 0 || y >= 400 - radius) {
             dy = -dy;
         }
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLUE);
         g.fillOval(x, y, radius, radius);
     }
 
@@ -33,7 +34,9 @@ public class Puck {
     public void resetPosition(int startX, int startY) {
         x = startX;
         y = startY;
-        dx = 5;
-        dy = 5;
+
+       
+        dx = random.nextBoolean() ? 5 : -5;
+        dy = random.nextBoolean() ? 5 : -5;
     }
 }
