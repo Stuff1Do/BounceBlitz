@@ -1,7 +1,6 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GameFrame extends JFrame{
 	public GameFrame() {
@@ -14,6 +13,9 @@ public class GameFrame extends JFrame{
 		
 		add(new GamePanel());
 		pack();
+		setResizable(false); 
+		setLocationRelativeTo(null);
+		setVisible(true);
 		
         setVisible(true);   
 	}
