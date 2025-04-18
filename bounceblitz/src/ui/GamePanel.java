@@ -1,9 +1,9 @@
 package ui;
 
-import physics.*;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import physics.*;
 
 public class GamePanel extends JPanel implements ActionListener {
 	Paddle player1, player2;
@@ -27,6 +27,18 @@ public class GamePanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+    	super.paintComponent(g); // 🔧 IMPORTANT
+    	player1.draw(g);
+    	player2.draw(g);
+    	puck.draw(g);
+
+    	Graphics2D g2 = (Graphics2D) g;
+    	g2.setColor(Color.WHITE);
+    	g2.setStroke(new BasicStroke(3));
+    	g2.drawLine(250, 0, 250, 500);
+    	g2.setStroke(new BasicStroke(6));
+    	g2.drawOval(200, 140, 100, 100);
+	}
     super.paintComponent(g); // 🔧 IMPORTANT
     player1.draw(g);
     player2.draw(g);
