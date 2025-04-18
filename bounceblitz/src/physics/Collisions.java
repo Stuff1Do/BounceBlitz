@@ -19,7 +19,7 @@ public class Collisions {
 
     public static boolean checkGoal(Puck puck) {
         // Check if the puck hits the left wall (goal for the right player)
-        if (puck.x <= 0 || puck.x >= 640 - puck.radius) {
+        if (puck.x <= 0 || puck.x >= 500 - puck.radius) {
             SoundEffects.playSound("bounceblitz/resources/goal.wav"); // Play goal sound for left wall
             return true;
         }
