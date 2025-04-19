@@ -11,12 +11,12 @@ public class GameFrame extends JFrame {
 	private MainMenu.ModeSelectionPanel modepanel;
 	private MainMenu.NameInputPanel nameInputPanel;
 	
-
+	
     public GameFrame() {
         setTitle("BounceBlitz");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        cardLayout = new CardLayout();
+        cardLayout = new CardLayout(); // CARDLAYOUT For switching to diff panels
         mainPanel = new JPanel(cardLayout);
 
         MainMenu menu = new MainMenu(this);
