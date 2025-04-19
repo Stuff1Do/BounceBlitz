@@ -9,7 +9,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	Paddle player1, player2;
 	Timer timer;
 	Puck puck;
-	
+
 	public GamePanel() {
 		setPreferredSize(new Dimension(500, 400));
 		setBackground(Color.black);
@@ -41,7 +41,6 @@ public class GamePanel extends JPanel implements ActionListener {
     	g2.drawOval(200, 140, 100, 100);
 	}
 
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player1.move();
@@ -54,11 +53,9 @@ public class GamePanel extends JPanel implements ActionListener {
                       
             puck.resetPosition(310, 230);
         }
-
-      
-
         repaint();
 	}
+
 	public class EventListener extends KeyAdapter{
 		
 		@Override

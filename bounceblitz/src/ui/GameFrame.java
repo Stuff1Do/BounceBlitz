@@ -4,9 +4,12 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GameFrame extends JFrame {
+
     private CardLayout cardLayout; 
     private JPanel mainPanel;
     private GamePanel gamePanel;
+	private MainMenu.ModeSelectionPanel modepanel;
+	
 
     public GameFrame() {
         setTitle("BounceBlitz");
@@ -17,9 +20,12 @@ public class GameFrame extends JFrame {
 
         MainMenu menu = new MainMenu(this);
         gamePanel = new GamePanel();
-
+		modepanel = new MainMenu.ModeSelectionPanel(this);
+	
+		
         mainPanel.add(menu, "Menu");
 		mainPanel.add(gamePanel, "Game");
+		mainPanel.add(modepanel, "ModeSelection");
 
         add(mainPanel);
         pack();
@@ -32,6 +38,10 @@ public class GameFrame extends JFrame {
         cardLayout.show(mainPanel, "Game");
         SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow()); 
     }
+
+	public void modeSelection() {
+		cardLayout.show(mainPanel, "ModeSelection");
+	}
 }
 
 
