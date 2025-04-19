@@ -42,7 +42,7 @@ public class Game {
 			playerManager.switchServer();
 			puck.resetPosition(panelWidth / 2, 200);
 			
-		}else if (Collisions.checkGoalRight(puck, panelWidth) && puck.getX() > panelWidth) {
+		}else if (Collisions.checkGoalRight(puck) && puck.getX() > panelWidth) {
 			
 			puckFrozen = true;
             p1.addPoint();
