@@ -51,8 +51,6 @@ public class MainMenu extends JPanel {
         });
         exitButton.addActionListener(e -> System.exit(0));
 
-
-
         // Button container (vertical)
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -124,6 +122,16 @@ public class MainMenu extends JPanel {
             JButton bestOf1 = createModeButton("Best of 1");
             JButton bestOf3 = createModeButton("Best of 3");
             JButton bestOf5 = createModeButton("Best of 5");
+
+            bestOf1.addActionListener(e -> {
+                frame.NameInputPanel();
+            });
+            bestOf3.addActionListener(e -> {
+                frame.NameInputPanel();
+            });
+            bestOf5.addActionListener(e -> {
+                frame.NameInputPanel();
+            });
 
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));

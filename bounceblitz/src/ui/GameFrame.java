@@ -9,6 +9,7 @@ public class GameFrame extends JFrame {
     private JPanel mainPanel;
     private GamePanel gamePanel;
 	private MainMenu.ModeSelectionPanel modepanel;
+	private MainMenu.NameInputPanel nameInputPanel;
 	
 
     public GameFrame() {
@@ -21,11 +22,12 @@ public class GameFrame extends JFrame {
         MainMenu menu = new MainMenu(this);
         gamePanel = new GamePanel();
 		modepanel = new MainMenu.ModeSelectionPanel(this);
-	
+		nameInputPanel = new MainMenu.NameInputPanel(this);
 		
         mainPanel.add(menu, "Menu");
 		mainPanel.add(gamePanel, "Game");
 		mainPanel.add(modepanel, "ModeSelection");
+		mainPanel.add(nameInputPanel, "NameInputPanel");
 
         add(mainPanel);
         pack();
@@ -41,6 +43,10 @@ public class GameFrame extends JFrame {
 
 	public void modeSelection() {
 		cardLayout.show(mainPanel, "ModeSelection");
+	}
+
+	public void NameInputPanel() {
+		cardLayout.show(mainPanel, "NameInputPanel");
 	}
 }
 
