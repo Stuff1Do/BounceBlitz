@@ -20,7 +20,7 @@ public class Paddle {
    public void move() {
        y += dy;
        if (y < 0) y = 0;
-       if (y > 400) y = 350;
+       if (y +height  > 400) y = 400-height;
    }
 
    public void setDirection(int dy){
@@ -28,5 +28,9 @@ public class Paddle {
    }
    public Rectangle getBounds() {
        return new Rectangle(x, y, width, height);
+   }
+   
+   public int getX() {
+       return x;
    }
 }

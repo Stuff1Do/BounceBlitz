@@ -9,14 +9,21 @@ public class Puck {
     private Random random = new Random();
 
     public Puck(int startX, int startY) {
-        resetPosition(startX, startY); // 
+        resetPosition(startX, startY);  
     }
-
+    public void setDx(int dx) {
+    	this.dx = dx;
+    }
+    public void setDy(int dy) {
+    	this.dy = dy;
+    }
     public void move() {
-        x += dx;
-        y += dy;
+    	if (dx != 0 || dy != 0) {  
+            x += dx;
+            y += dy;
+        }
 
-        // Bounce off top and bottom
+        
         if (y <= 0 || y >= 400 - radius) {
             dy = -dy;
         }
@@ -30,13 +37,17 @@ public class Puck {
     public Rectangle getBounds() {
         return new Rectangle(x, y, radius, radius);
     }
-
+    
     public void resetPosition(int startX, int startY) {
         x = startX;
         y = startY;
 
        
-        dx = random.nextBoolean() ? 5 : -5;
-        dy = random.nextBoolean() ? 5 : -5;
+        dx = 0;
+        dy = 0;
     }
+    public int getX() {
+    	return x;
+    }
+   
 }
