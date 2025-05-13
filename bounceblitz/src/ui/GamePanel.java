@@ -22,8 +22,12 @@ public class GamePanel extends JPanel implements ActionListener {
     Scoreboard scoreboard;
     Timer timer;
     int format = 3;
+    int p1RoundsWon = 0;
+    int p2RoundsWon = 0;
+    boolean matchOver = false;
+
     public GamePanel(String name1, String name2, int format) {
-    	this.format = format;
+        this.format = format;
         setPreferredSize(new Dimension(500, 400));
         setBackground(Color.BLACK);
        
@@ -37,8 +41,6 @@ public class GamePanel extends JPanel implements ActionListener {
         playerManager.setInitialServer(player1);
         game = new Game(puck, playerManager, 500);
         scoreboard = new Scoreboard(player1, player2);
-
-      
 
         game.freezePuck();
         Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
@@ -69,10 +71,52 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (matchOver) return;
         p1.move();
         p2.move();
         game.engine();
+        checkRoundWin();
         repaint();
+    }
+
+    private void checkRoundWin() {
+        int goalsToWinRound = 5; // 5 goals per round
+        if (player1.getScore() >= goalsToWinRound) {
+            p1RoundsWon++;
+            showRoundWinner(player1.getName());
+            resetRound();
+        } else if (player2.getScore() >= goalsToWinRound) {
+            p2RoundsWon++;
+            showRoundWinner(player2.getName());
+            resetRound();
+        }
+        int roundsToWin = (format / 2) + 1;
+        if (p1RoundsWon >= roundsToWin) {
+            matchOver = true;
+            showMatchWinner(player1.getName());
+        } else if (p2RoundsWon >= roundsToWin) {
+            matchOver = true;
+            showMatchWinner(player2.getName());
+        }
+    }
+
+    private void resetRound() {
+        player1.resetScore();
+        player2.resetScore();
+        game.freezePuck();
+        Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
+        repaint();
+    }
+
+    private void showRoundWinner(String winnerName) {
+        JOptionPane.showMessageDialog(this, winnerName + " wins the round!");
+    }
+
+    private void showMatchWinner(String winnerName) {
+        JOptionPane.showMessageDialog(this, winnerName + " wins the match!");
+        // Return to main menu
+        SwingUtilities.getWindowAncestor(this).dispose();
+        new GameFrame();
     }
 
     private class EventListener extends KeyAdapter {
