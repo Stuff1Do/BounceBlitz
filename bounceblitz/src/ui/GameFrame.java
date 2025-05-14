@@ -78,7 +78,7 @@ public class GameFrame extends JFrame {
         gameMusic = playMusic(filePath);
     }
 
-    private void stopGameMusic() {
+    public void stopGameMusic() {
         if (gameMusic != null && gameMusic.isRunning()) {
             gameMusic.stop();
         }
