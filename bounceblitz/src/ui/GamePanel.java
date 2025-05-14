@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements ActionListener {
             game.freezePuck();
             Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
             repaint();
-        } else {
+        } else if (option == JOptionPane.NO_OPTION) {
             // Exit: return to main menu instead of closing window
             if (parentFrame != null) {
                 parentFrame.showMainMenu();
