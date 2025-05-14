@@ -128,10 +128,10 @@ public class MainMenu extends JPanel {
                 frame.setNameInputPanel(1);
             });
             bestOf3.addActionListener(e -> {
-                frame.setNameInputPanel(3);
+                frame.setNameInputPanel(2);
             });
             bestOf5.addActionListener(e -> {
-                frame.setNameInputPanel(5);
+                frame.setNameInputPanel(3);
             });
 
             JPanel buttonPanel = new JPanel();
