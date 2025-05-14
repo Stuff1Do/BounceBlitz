@@ -1,10 +1,10 @@
 package ui;
 
-import javax.swing.*;
 import java.awt.*;
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import javax.sound.sampled.*;
+import javax.swing.*;
 
 public class GameFrame extends JFrame {
     private CardLayout cardLayout;
@@ -25,20 +25,17 @@ public class GameFrame extends JFrame {
 
         MainMenu menu = new MainMenu(this);
         modepanel = new MainMenu.ModeSelectionPanel(this);
-
         mainPanel.add(menu, "Menu");
         mainPanel.add(modepanel, "ModeSelection");
+        cardLayout.show(mainPanel, "Menu");
 
         add(mainPanel);
-
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
 
         // Start menu music
         playMenuMusic("bounceblitz/resources/menu.wav");
-
-        cardLayout.show(mainPanel, "Menu");
         pack();
     }
 
@@ -53,6 +50,7 @@ public class GameFrame extends JFrame {
         pack();
         SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
     }
+
 
     public void modeSelection() {
         cardLayout.show(mainPanel, "ModeSelection");
