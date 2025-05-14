@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements ActionListener {
     int format = 3;
     boolean matchOver = false;
     java.util.List<String> matchHistory = new java.util.ArrayList<>();
+    int p1Wins = 0;
+    int p2Wins = 0;
 
     public GamePanel(String name1, String name2, int format) {
         this.format = format;
@@ -67,14 +69,10 @@ public class GamePanel extends JPanel implements ActionListener {
         g2.setStroke(new BasicStroke(6));
         g2.drawOval(200, 150, 100, 100);
 
-        // Draw match history at the bottom
+        // Draw current match score at the bottom
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Arial", Font.PLAIN, 14));
-        int y = 380;
-        for (int i = Math.max(0, matchHistory.size() - 5); i < matchHistory.size(); i++) {
-            g.drawString("Match " + (i + 1) + ": " + matchHistory.get(i), 20, y);
-            y += 16;
-        }
+        g.drawString("Score: " + p1Wins + ":" + p2Wins, 20, 380);
     }
 
     private void checkMatchWin() {
@@ -98,7 +96,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void showMatchWinner(String winnerName) {
-        matchHistory.add(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+        if (winnerName.equals(player1.getName())) {
+            p1Wins++;
+        } else {
+            p2Wins++;
+        }
+        matchHistory.add(p1Wins + ":" + p2Wins);
         int option = JOptionPane.showOptionDialog(this,
                 winnerName + " wins the match!\n\nDo you want to play again?",
                 "Match Over",

@@ -43,7 +43,7 @@ public class MainMenu extends JPanel {
                                             
                                             Objective:
                                             -The objective is to score by getting the puck into the opponent's goal.
-                                            -The game ends when a player scores 5 goals.
+                                            -The game ends when a player scores sufficient scores for chosen mode.
                                             
                                             Good luck and have fun!""");
         });
