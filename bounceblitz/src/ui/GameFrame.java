@@ -51,6 +51,13 @@ public class GameFrame extends JFrame {
         SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
     }
 
+    public void showMainMenu() {
+        cardLayout.show(mainPanel, "Menu");
+    }
+
+    public void playMenuMusicAgain() {
+        playMenuMusic("bounceblitz/resources/menu.wav");
+    }
 
     public void modeSelection() {
         cardLayout.show(mainPanel, "ModeSelection");

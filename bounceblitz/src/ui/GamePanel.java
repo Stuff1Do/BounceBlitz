@@ -123,8 +123,11 @@ public class GamePanel extends JPanel implements ActionListener {
             Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
             repaint();
         } else {
-            // Exit: close window
-            SwingUtilities.getWindowAncestor(this).dispose();
+            // Exit: return to main menu instead of closing window
+            if (parentFrame != null) {
+                parentFrame.showMainMenu();
+                parentFrame.playMenuMusicAgain();
+            }
         }
     }
 
