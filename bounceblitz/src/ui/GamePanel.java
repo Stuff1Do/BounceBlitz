@@ -22,8 +22,10 @@ public class GamePanel extends JPanel implements ActionListener {
     Scoreboard scoreboard;
     Timer timer;
     int format = 3;
+    boolean matchOver = false;
+
     public GamePanel(String name1, String name2, int format) {
-    	this.format = format;
+        this.format = format;
         setPreferredSize(new Dimension(500, 400));
         setBackground(Color.BLACK);
        
@@ -37,8 +39,6 @@ public class GamePanel extends JPanel implements ActionListener {
         playerManager.setInitialServer(player1);
         game = new Game(puck, playerManager, 500);
         scoreboard = new Scoreboard(player1, player2);
-
-      
 
         game.freezePuck();
         Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
@@ -67,12 +67,36 @@ public class GamePanel extends JPanel implements ActionListener {
         g2.drawOval(200, 150, 100, 100);
     }
 
+    private void checkMatchWin() {
+        if (player1.getScore() >= format) {
+            matchOver = true;
+            showMatchWinner(player1.getName());
+        } else if (player2.getScore() >= format) {
+            matchOver = true;
+            showMatchWinner(player2.getName());
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (matchOver) return;
         p1.move();
         p2.move();
         game.engine();
+        checkMatchWin();
         repaint();
+    }
+
+    private void showMatchWinner(String winnerName) {
+        JOptionPane.showMessageDialog(this, winnerName + " wins the match!");
+        // Stop game music before returning to menu
+        GameFrame parentFrame = (GameFrame) SwingUtilities.getWindowAncestor(this);
+        if (parentFrame != null) {
+            parentFrame.stopGameMusic();
+        }
+        // Return to main menu
+        SwingUtilities.getWindowAncestor(this).dispose();
+        new GameFrame();
     }
 
     private class EventListener extends KeyAdapter {
