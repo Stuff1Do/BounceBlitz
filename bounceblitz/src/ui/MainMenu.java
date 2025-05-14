@@ -24,14 +24,11 @@ public class MainMenu extends JPanel {
 
         // Create styled buttons
         JButton playButton = createStyledButton("Play");
-        playButton.addActionListener(e -> {
-            frame.modeSelection();
-        });
         JButton howToPlayButton = createStyledButton("How to Play");
         JButton exitButton = createStyledButton("Exit");
 
         // action listeners
-              
+        playButton.addActionListener(e -> { frame.modeSelection();});    
         howToPlayButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, """
                                             How to play: 
@@ -93,7 +90,6 @@ public class MainMenu extends JPanel {
         button.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         // Hover effect
-        
         button.setOpaque(true);
         button.setContentAreaFilled(true);
 
@@ -237,6 +233,7 @@ public class MainMenu extends JPanel {
                 String player1Name = player1Field.getText().trim();
                 String player2Name = player2Field.getText().trim();
                 
+                // case of empty names
                 if (!player1Name.isEmpty() && !player2Name.isEmpty()) {
                     frame.showGame(player1Name, player2Name, matchFormat);
                 } else {
