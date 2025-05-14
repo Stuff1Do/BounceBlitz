@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     int format = 3;
     boolean matchOver = false;
+    java.util.List<String> matchHistory = new java.util.ArrayList<>();
 
     public GamePanel(String name1, String name2, int format) {
         this.format = format;
@@ -65,6 +66,15 @@ public class GamePanel extends JPanel implements ActionListener {
         g2.drawLine(250, 0, 250, 400);
         g2.setStroke(new BasicStroke(6));
         g2.drawOval(200, 150, 100, 100);
+
+        // Draw match history at the bottom
+        g.setColor(Color.LIGHT_GRAY);
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
+        int y = 380;
+        for (int i = Math.max(0, matchHistory.size() - 5); i < matchHistory.size(); i++) {
+            g.drawString("Match " + (i + 1) + ": " + matchHistory.get(i), 20, y);
+            y += 16;
+        }
     }
 
     private void checkMatchWin() {
@@ -88,15 +98,31 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void showMatchWinner(String winnerName) {
-        JOptionPane.showMessageDialog(this, winnerName + " wins the match!");
-        // Stop game music before returning to menu
+        matchHistory.add(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+        int option = JOptionPane.showOptionDialog(this,
+                winnerName + " wins the match!\n\nDo you want to play again?",
+                "Match Over",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Continue", "Exit"},
+                "Continue");
         GameFrame parentFrame = (GameFrame) SwingUtilities.getWindowAncestor(this);
         if (parentFrame != null) {
             parentFrame.stopGameMusic();
         }
-        // Return to main menu
-        SwingUtilities.getWindowAncestor(this).dispose();
-        new GameFrame();
+        if (option == JOptionPane.YES_OPTION) {
+            // Continue: reset scores, keep match history, start new match
+            player1.resetScore();
+            player2.resetScore();
+            matchOver = false;
+            game.freezePuck();
+            Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
+            repaint();
+        } else {
+            // Exit: close window
+            SwingUtilities.getWindowAncestor(this).dispose();
+        }
     }
 
     private class EventListener extends KeyAdapter {
