@@ -213,6 +213,9 @@ public class MainMenu extends JPanel {
             label1.setForeground(Color.CYAN);
             label2.setForeground(Color.CYAN);
 
+            label1.setFont(new Font("Arial", Font.BOLD, 20));
+            label2.setFont(new Font("Arial", Font.BOLD, 20));
+
             JButton startButton = createModeButton("Start Game");
 
             JPanel form = new JPanel();
@@ -310,6 +313,11 @@ public class MainMenu extends JPanel {
 
             // Reset and Back buttons
             JButton resetButton = createStyledButton("Reset Values");
+            resetButton.addActionListener(e -> {
+                timerCombo.setSelectedIndex(0);
+                puckSlider.setValue(puckSpeed);
+                paddleSlider.setValue(paddleSpeed);
+            });
             
             JButton backButton = createStyledButton("Back");
             backButton.addActionListener(e -> frame.showMainMenu());
@@ -329,13 +337,14 @@ public class MainMenu extends JPanel {
             centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             centerPanel.add(backButton);
 
+            // Rectangle box around settings
             JPanel wrapper = new JPanel(new GridBagLayout());
             wrapper.setBackground(Color.BLACK);
             JPanel rectangle = new JPanel();
             rectangle.setLayout(new BoxLayout(rectangle, BoxLayout.Y_AXIS));
             rectangle.setBackground(Color.BLACK);
             rectangle.setBorder(new LineBorder(Color.CYAN, 10));
-            rectangle.setPreferredSize(new Dimension(300, 350));
+            rectangle.setPreferredSize(new Dimension(300, 300));
             rectangle.add(centerPanel);
 
             wrapper.add(rectangle);
