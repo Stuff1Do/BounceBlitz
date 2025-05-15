@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements ActionListener {
        
         p1 = new Paddle(5, 150);
         p2 = new Paddle(480, 150);
-        puck = new Puck(250, 200);
+        puck = new Puck(242, 193);
 
         player1 = new Player(name1, p1);
         player2 = new Player(name2, p2);
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements ActionListener {
         scoreboard = new Scoreboard(player1, player2);
 
         game.freezePuck();
+        puck.resetPosition();
         Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
 
         setFocusable(true);
@@ -130,6 +131,7 @@ public class GamePanel extends JPanel implements ActionListener {
             // Exit: return to main menu instead of closing window
             if (parentFrame != null) {
                 parentFrame.showMainMenu();
+                parentFrame.stopGameMusic();
                 parentFrame.playMenuMusicAgain();
             }
         }

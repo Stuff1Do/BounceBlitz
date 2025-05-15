@@ -8,8 +8,9 @@ public class Puck {
     public int dx, dy;
     private Random random = new Random();
 
-    public Puck(int startX, int startY) {
-        resetPosition(startX, startY);  
+    public Puck(int x, int y) {
+        this.x = x;
+        this.y = y;  
     }
     public void setDx(int dx) {
     	this.dx = dx;
@@ -37,12 +38,11 @@ public class Puck {
         return new Rectangle(x, y, radius, radius);
     }
     
-    public void resetPosition(int startX, int startY) {
-        x = startX;
-        y = startY;
-
-        dx = 0;
-        dy = 0;
+    public void resetPosition()  {
+       this.x = 242;
+       this.y = 193;
+        this.dx = 0;
+        this.dy = 0;
     }
     public int getX() {
     	return x;

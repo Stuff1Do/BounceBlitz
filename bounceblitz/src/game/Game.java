@@ -40,14 +40,14 @@ public class Game {
 			puckFrozen = true;
 			p2.addPoint();
 			playerManager.switchServer();
-			puck.resetPosition(panelWidth / 2, 200);
+			puck.resetPosition();
 			
 		}else if (Collisions.checkGoalRight(puck) && puck.getX() > panelWidth) {
 			
 			puckFrozen = true;
             p1.addPoint();
             playerManager.switchServer();
-            puck.resetPosition(panelWidth / 2, 200);
+            puck.resetPosition();
             
         	}
 		}
