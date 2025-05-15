@@ -207,14 +207,17 @@ public class MainMenu extends JPanel {
             JTextField player1Field = new JTextField(15);
             JTextField player2Field = new JTextField(15);
 
+            player1Field.setFont(new Font("Arial", Font.PLAIN, 18));
+            player2Field.setFont(new Font("Arial", Font.PLAIN, 18));
+
             JLabel label1 = new JLabel("Player 1:");
             JLabel label2 = new JLabel("Player 2:");
 
             label1.setForeground(Color.CYAN);
             label2.setForeground(Color.CYAN);
 
-            label1.setFont(new Font("Arial", Font.BOLD, 20));
-            label2.setFont(new Font("Arial", Font.BOLD, 20));
+            label1.setFont(new Font("Arial", Font.BOLD, 25));
+            label2.setFont(new Font("Arial", Font.BOLD, 25));
 
             JButton startButton = createModeButton("Start Game");
 
