@@ -300,15 +300,16 @@ public class MainMenu extends JPanel {
             JComboBox<String> timerCombo = new JComboBox<>(timerOptions);
             styleComboBox(timerCombo);
 
-            int puckSpeed = 5;
             // Puck Speed
+            int puckSpeed = 5;
             JLabel puckLabel = createLabel("Puck Speed:");
             JSlider puckSlider = createSlider(puckSpeed);
-
-            int paddleSpeed = 5;
+            
             // Paddle Speed
+            int paddleSpeed = 5;
             JLabel paddleLabel = createLabel("Paddle Speed:");
             JSlider paddleSlider = createSlider(paddleSpeed);
+            
             
 
             // Reset and Back buttons
