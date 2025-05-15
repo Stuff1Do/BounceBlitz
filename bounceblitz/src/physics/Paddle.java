@@ -33,4 +33,6 @@ public class Paddle {
    public int getX() {
        return x;
    }
+
+   
 }
