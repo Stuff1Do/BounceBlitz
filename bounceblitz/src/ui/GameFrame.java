@@ -82,6 +82,10 @@ public class GameFrame extends JFrame {
         playMenuMusic("bounceblitz/resources/menu.wav");
     }
 
+    public void playGameMusicAgain() {
+        playMenuMusic("bounceblitz/resources/game.wav");
+    }
+
     private void playGameMusic(String filePath) {
         gameMusic = playMusic(filePath);
     }

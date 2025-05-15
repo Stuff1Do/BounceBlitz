@@ -121,6 +121,7 @@ public class GamePanel extends JPanel implements ActionListener {
             matchOver = false;
             game.freezePuck();
             Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
+            parentFrame.playGameMusicAgain();
             repaint();
         } else if (option == JOptionPane.NO_OPTION) {
             // Exit: return to main menu instead of closing window
