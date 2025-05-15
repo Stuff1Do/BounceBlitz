@@ -23,7 +23,6 @@ public class Puck {
             y += dy;
         }
 
-        
         if (y <= 0 || y >= 400 - radius) {
             dy = -dy;
         }
@@ -42,7 +41,6 @@ public class Puck {
         x = startX;
         y = startY;
 
-       
         dx = 0;
         dy = 0;
     }

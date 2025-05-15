@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+
+
 public class MainMenu extends JPanel {
 
     private GameFrame frame;
@@ -25,6 +27,7 @@ public class MainMenu extends JPanel {
         // Create styled buttons
         JButton playButton = createStyledButton("Play");
         JButton howToPlayButton = createStyledButton("How to Play");
+        JButton SettingsButton = createStyledButton("Settings");
         JButton exitButton = createStyledButton("Exit");
 
         // action listeners
@@ -47,7 +50,9 @@ public class MainMenu extends JPanel {
                                             
                                             Good luck and have fun!""");
         });
+        
         exitButton.addActionListener(e -> System.exit(0));
+        SettingsButton.addActionListener(e -> {frame.showSettings();});
 
         // Button container (vertical)
         JPanel buttonPanel = new JPanel();
@@ -56,6 +61,8 @@ public class MainMenu extends JPanel {
         buttonPanel.add(playButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 15)));
         buttonPanel.add(howToPlayButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        buttonPanel.add(SettingsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 15)));
         buttonPanel.add(exitButton);
 
@@ -206,6 +213,9 @@ public class MainMenu extends JPanel {
             label1.setForeground(Color.CYAN);
             label2.setForeground(Color.CYAN);
 
+            label1.setFont(new Font("Arial", Font.BOLD, 20));
+            label2.setFont(new Font("Arial", Font.BOLD, 20));
+
             JButton startButton = createModeButton("Start Game");
 
             JPanel form = new JPanel();
@@ -244,6 +254,130 @@ public class MainMenu extends JPanel {
         }
 
         private static JButton createModeButton(String text) {
+            JButton button = new JButton(text);
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.setFont(new Font("Arial", Font.BOLD, 18));
+            button.setFocusPainted(false);
+            button.setBackground(Color.CYAN);
+            button.setForeground(Color.BLACK);
+            button.setPreferredSize(new Dimension(140, 30));
+            button.setMaximumSize(new Dimension(140, 30));
+            button.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+
+            button.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    button.setBackground(new Color(0, 200, 200));
+                }
+
+                public void mouseExited(MouseEvent e) {
+                    button.setBackground(Color.CYAN);
+                }
+            });
+
+            return button;
+        }
+    }
+
+    public static class SettingsPanel extends JPanel {
+
+        public SettingsPanel(GameFrame frame) {
+            setLayout(new BorderLayout());
+            setBackground(Color.BLACK);
+
+            JLabel title = new JLabel("Settings", SwingConstants.CENTER);
+            title.setFont(new Font("Arial", Font.BOLD, 36));
+            title.setForeground(Color.CYAN);
+            title.setBorder(BorderFactory.createEmptyBorder(50, 10, 30, 10));
+            add(title, BorderLayout.NORTH);
+
+            JPanel centerPanel = new JPanel();
+            centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+            centerPanel.setBackground(Color.BLACK);
+
+            // Timer setting
+            JLabel timerLabel = createLabel("Set Timer:");
+            String[] timerOptions = { "None", "30 sec", "1 min", "5 min" };
+            JComboBox<String> timerCombo = new JComboBox<>(timerOptions);
+            styleComboBox(timerCombo);
+
+            // Puck Speed
+            int puckSpeed = 5;
+            JLabel puckLabel = createLabel("Puck Speed:");
+            JSlider puckSlider = createSlider(puckSpeed);
+            
+            // Paddle Speed
+            int paddleSpeed = 5;
+            JLabel paddleLabel = createLabel("Paddle Speed:");
+            JSlider paddleSlider = createSlider(paddleSpeed);
+            
+            
+
+            // Reset and Back buttons
+            JButton resetButton = createStyledButton("Reset Values");
+            resetButton.addActionListener(e -> {
+                timerCombo.setSelectedIndex(0);
+                puckSlider.setValue(puckSpeed);
+                paddleSlider.setValue(paddleSpeed);
+            });
+            
+            JButton backButton = createStyledButton("Back");
+            backButton.addActionListener(e -> frame.showMainMenu());
+
+
+            // Add components
+            centerPanel.add(timerLabel);
+            centerPanel.add(timerCombo);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            centerPanel.add(puckLabel);
+            centerPanel.add(puckSlider);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            centerPanel.add(paddleLabel);
+            centerPanel.add(paddleSlider);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+            centerPanel.add(resetButton);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            centerPanel.add(backButton);
+
+            // Rectangle box around settings
+            JPanel wrapper = new JPanel(new GridBagLayout());
+            wrapper.setBackground(Color.BLACK);
+            JPanel rectangle = new JPanel();
+            rectangle.setLayout(new BoxLayout(rectangle, BoxLayout.Y_AXIS));
+            rectangle.setBackground(Color.BLACK);
+            rectangle.setBorder(new LineBorder(Color.CYAN, 10));
+            rectangle.setPreferredSize(new Dimension(300, 300));
+            rectangle.add(centerPanel);
+
+            wrapper.add(rectangle);
+            add(wrapper, BorderLayout.CENTER);
+        }
+
+        private JLabel createLabel(String text) {
+            JLabel label = new JLabel(text);
+            label.setForeground(Color.CYAN);
+            label.setFont(new Font("Arial", Font.BOLD, 16));
+            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+            return label;
+        }
+
+        private JSlider createSlider(int initialValue) {
+            JSlider slider = new JSlider(1, 10, initialValue);
+            slider.setMajorTickSpacing(1);
+            slider.setPaintTicks(true);
+            slider.setPaintLabels(true);
+            slider.setForeground(Color.CYAN);
+            slider.setBackground(Color.BLACK);
+            slider.setAlignmentX(Component.CENTER_ALIGNMENT);
+            return slider;
+        }
+
+        private void styleComboBox(JComboBox<String> comboBox) {
+            comboBox.setFont(new Font("Arial", Font.PLAIN, 14));
+            comboBox.setMaximumSize(new Dimension(150, 25));
+            comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        }
+
+        private JButton createStyledButton(String text) {
             JButton button = new JButton(text);
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.setFont(new Font("Arial", Font.BOLD, 18));

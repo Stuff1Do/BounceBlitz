@@ -1,10 +1,10 @@
 package ui;
 
-import javax.swing.*;
 import java.awt.*;
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import javax.sound.sampled.*;
+import javax.swing.*;
 
 public class GameFrame extends JFrame {
     private CardLayout cardLayout;
@@ -12,6 +12,7 @@ public class GameFrame extends JFrame {
     private GamePanel gamePanel;
     private MainMenu.ModeSelectionPanel modepanel;
     private MainMenu.NameInputPanel nameInputPanel;
+    private MainMenu.SettingsPanel settingsPanel;
 
     private Clip menuMusic;
     private Clip gameMusic;
@@ -25,12 +26,13 @@ public class GameFrame extends JFrame {
 
         MainMenu menu = new MainMenu(this);
         modepanel = new MainMenu.ModeSelectionPanel(this);
+        settingsPanel = new MainMenu.SettingsPanel(this);
 
         mainPanel.add(menu, "Menu");
         mainPanel.add(modepanel, "ModeSelection");
+        mainPanel.add(settingsPanel, "SettingsPanel");
 
         add(mainPanel);
-
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
@@ -68,6 +70,9 @@ public class GameFrame extends JFrame {
         cardLayout.show(mainPanel, "Menu");
     }
 
+    public void showSettings() {
+        cardLayout.show(mainPanel, "SettingsPanel");
+    }
     private void playMenuMusic(String filePath) {
         menuMusic = playMusic(filePath);
     }
