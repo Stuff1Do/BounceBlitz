@@ -6,7 +6,6 @@ import java.util.Random;
 public class Puck {
     public int x, y, radius = 15;
     public int dx, dy;
-    private Random random = new Random();
 
     public Puck(int x, int y) {
         this.x = x;
@@ -18,6 +17,7 @@ public class Puck {
     public void setDy(int dy) {
     	this.dy = dy;
     }
+    
     public void move() {
     	if (dx != 0 || dy != 0) {  
             x += dx;

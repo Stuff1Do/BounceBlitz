@@ -12,6 +12,7 @@ import game.Scoreboard;
 import players.Player;
 import players.PlayerManager;
 import utils.Randomizer;
+import ui.MainMenu;
 
 public class GamePanel extends JPanel implements ActionListener {
     Paddle p1, p2;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel implements ActionListener {
     java.util.List<String> matchHistory = new java.util.ArrayList<>();
     int p1Wins = 0;
     int p2Wins = 0;
-
+    int paddleSpeed = 8;
     public GamePanel(String name1, String name2, int format) {
         this.format = format;
         setPreferredSize(new Dimension(500, 400));
@@ -153,10 +154,10 @@ public class GamePanel extends JPanel implements ActionListener {
             }
 
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_W -> p1.setDirection(-8);
-                case KeyEvent.VK_S -> p1.setDirection(8);
-                case KeyEvent.VK_UP -> p2.setDirection(-8);
-                case KeyEvent.VK_DOWN -> p2.setDirection(8);
+                case KeyEvent.VK_W -> p1.setDirection(-paddleSpeed);
+                case KeyEvent.VK_S -> p1.setDirection(paddleSpeed);
+                case KeyEvent.VK_UP -> p2.setDirection(-paddleSpeed);
+                case KeyEvent.VK_DOWN -> p2.setDirection(paddleSpeed);
             }
         }
 
@@ -168,4 +169,8 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
+    public void setPaddleSpeed(int paddleSpeed) {
+        this.paddleSpeed = paddleSpeed + 6;
+        
+    }   
 }

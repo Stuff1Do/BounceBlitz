@@ -4,9 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
-
-
+import java.awt.event.*;
+import utils.Randomizer;
+import ui.GamePanel;
 public class MainMenu extends JPanel {
 
     private GameFrame frame;
@@ -280,10 +280,11 @@ public class MainMenu extends JPanel {
 
     public static class SettingsPanel extends JPanel {
 
-        public SettingsPanel(GameFrame frame) {
+        public SettingsPanel(GameFrame frame, GamePanel panel) {
             setLayout(new BorderLayout());
             setBackground(Color.BLACK);
-
+            Randomizer randomizer = new Randomizer();
+            
             JLabel title = new JLabel("Settings", SwingConstants.CENTER);
             title.setFont(new Font("Arial", Font.BOLD, 36));
             title.setForeground(Color.CYAN);
@@ -301,15 +302,16 @@ public class MainMenu extends JPanel {
             styleComboBox(timerCombo);
 
             // Puck Speed
-            int puckSpeed = 5;
+            int puckSpeed = 6;
             JLabel puckLabel = createLabel("Puck Speed:");
             JSlider puckSlider = createSlider(puckSpeed);
+            puckSlider.addChangeListener(e -> {randomizer.setPuckSpeed(puckSlider.getValue());});
             
             // Paddle Speed
-            int paddleSpeed = 5;
+            int paddleSpeed = 8;
             JLabel paddleLabel = createLabel("Paddle Speed:");
             JSlider paddleSlider = createSlider(paddleSpeed);
-            
+            paddleSlider.addChangeListener(e-> {panel.setPaddleSpeed(paddleSlider.getValue());});
             
 
             // Reset and Back buttons
@@ -401,5 +403,6 @@ public class MainMenu extends JPanel {
             return button;
         }
     }
+   
 }
 

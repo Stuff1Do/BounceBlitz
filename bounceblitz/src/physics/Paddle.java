@@ -26,6 +26,7 @@ public class Paddle {
    public void setDirection(int dy){
 	   this.dy = dy;
    }
+   
    public Rectangle getBounds() {
        return new Rectangle(x, y, width, height);
    }

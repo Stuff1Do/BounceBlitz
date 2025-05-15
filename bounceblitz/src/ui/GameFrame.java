@@ -16,7 +16,7 @@ public class GameFrame extends JFrame {
 
     private Clip menuMusic;
     private Clip gameMusic;
-
+    
     public GameFrame() {
         setTitle("BounceBlitz");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +26,7 @@ public class GameFrame extends JFrame {
 
         MainMenu menu = new MainMenu(this);
         modepanel = new MainMenu.ModeSelectionPanel(this);
-        settingsPanel = new MainMenu.SettingsPanel(this);
+        settingsPanel = new MainMenu.SettingsPanel(this, gamePanel);
 
         mainPanel.add(menu, "Menu");
         mainPanel.add(modepanel, "ModeSelection");
@@ -39,7 +39,7 @@ public class GameFrame extends JFrame {
 
         // Start menu music
         playMenuMusic("bounceblitz/resources/menu.wav");
-
+        
         cardLayout.show(mainPanel, "Menu");
         pack();
     }
@@ -114,4 +114,5 @@ public class GameFrame extends JFrame {
         }
         return null;
     }
+    
 }
