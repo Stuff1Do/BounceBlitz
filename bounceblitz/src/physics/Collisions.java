@@ -4,32 +4,31 @@ import ui.SoundEffects;
 
 public class Collisions {
     public static void handlePaddleCollision(Puck puck, Paddle paddle) {
-        // Handle paddle collision
+        
         if (puck.getBounds().intersects(paddle.getBounds())) {
             puck.dx = -puck.dx;
-            SoundEffects.playSound("bounceblitz/resources/paddlehit.wav"); // Play collision sound
+            SoundEffects.playSound("bounceblitz/resources/paddlehit.wav"); 
         }
 
-        // Handle top and bottom edge collisions
-        if (puck.y <= 0 || puck.y >= 400 - puck.radius) { // Assuming game height is 400
-            puck.dy = -puck.dy; // Reverse vertical direction
-            SoundEffects.playSound("bounceblitz/resources/wall.wav"); // Play collision sound
+        if (puck.y <= 0 || puck.y >= 400 - puck.radius) { 
+            puck.dy = -puck.dy; 
+            SoundEffects.playSound("bounceblitz/resources/wall.wav"); 
         }
     }
 
     public static boolean checkGoalRight(Puck puck) {
-        // Check if the puck hits the right wall (goal for the left player)
-        if (puck.x >= 500) { // Game width is 500
-            SoundEffects.playSound("bounceblitz/resources/goal.wav"); // Play goal sound for right wall
+      
+        if (puck.x >= 500) { 
+            SoundEffects.playSound("bounceblitz/resources/goal.wav"); 
             return true;
         }
         return false;
     }
 
     public static boolean checkGoalLeft(Puck puck) {
-        // Check if the puck hits the left wall (goal for the right player)
+       
         if (puck.x <= 0) {
-            SoundEffects.playSound("bounceblitz/resources/goal.wav"); // Play goal sound for left wall
+            SoundEffects.playSound("bounceblitz/resources/goal.wav"); 
             return true;
         }
         return false;

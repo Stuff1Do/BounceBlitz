@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-
 import physics.Puck;
 import physics.Paddle;
 import game.Game;
@@ -12,7 +11,8 @@ import game.Scoreboard;
 import players.Player;
 import players.PlayerManager;
 import utils.Randomizer;
-import ui.MainMenu;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel extends JPanel implements ActionListener {
     Paddle p1, p2;
@@ -24,12 +24,15 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     int format = 3;
     boolean matchOver = false;
-    java.util.List<String> matchHistory = new java.util.ArrayList<>();
+    List<String> matchHistory = new ArrayList<>();
     int p1Wins = 0;
     int p2Wins = 0;
-    int paddleSpeed = 8;
-    public GamePanel(String name1, String name2, int format) {
+    int paddleSpeed = 11;
+    GameFrame parentFrame;
+
+    public GamePanel(String name1, String name2, int format, GameFrame parentFrame) {
         this.format = format;
+        this.parentFrame = parentFrame;
         setPreferredSize(new Dimension(500, 400));
         setBackground(Color.BLACK);
        
@@ -40,13 +43,15 @@ public class GamePanel extends JPanel implements ActionListener {
         player1 = new Player(name1, p1);
         player2 = new Player(name2, p2);
         playerManager = new PlayerManager(List.of(player1, player2));
-        playerManager.setInitialServer(player1);
-        game = new Game(puck, playerManager, 500);
+        Player initialServer = Math.random() < 0.5 ? player1 : player2;
+        playerManager.setInitialServer(initialServer);
+        game = new Game(puck, playerManager);
         scoreboard = new Scoreboard(player1, player2);
 
         game.freezePuck();
         puck.resetPosition();
-        Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
+        Randomizer.randomizeDirectionForServer(puck, initialServer.getPaddle());
+
 
         setFocusable(true);
         requestFocusInWindow();
@@ -71,7 +76,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2.setStroke(new BasicStroke(6));
         g2.drawOval(200, 150, 100, 100);
 
-        // Draw current match score at the bottom
+        
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Arial", Font.PLAIN, 14));
         g.drawString("Score: " + p1Wins + ":" + p2Wins, 20, 380);
@@ -112,46 +117,52 @@ public class GamePanel extends JPanel implements ActionListener {
                 null,
                 new Object[]{"Continue", "Exit"},
                 "Continue");
-        GameFrame parentFrame = (GameFrame) SwingUtilities.getWindowAncestor(this);
-        if (parentFrame != null) {
-            parentFrame.stopGameMusic();
-        }
         if (option == JOptionPane.YES_OPTION) {
-            // Continue: reset scores, keep match history, start new match
+            
             player1.resetScore();
             player2.resetScore();
             matchOver = false;
             game.freezePuck();
             Randomizer.randomizeDirectionForServer(puck, playerManager.getServer().getPaddle());
             if (parentFrame != null) {
-                parentFrame.stopGameMusic();
-                parentFrame.playGameMusicAgain();
+                parentFrame.setScreen("Game"); 
             }
             repaint();
         } else if (option == JOptionPane.NO_OPTION) {
-            // Exit: return to main menu instead of closing window
+            
             if (parentFrame != null) {
-                parentFrame.showMainMenu();
-                parentFrame.stopGameMusic();
-                parentFrame.playMenuMusicAgain();
+                parentFrame.setScreen("Menu"); 
             }
         }
     }
 
+    public void setPaddleSpeed(int paddleSpeed) {
+        this.paddleSpeed = paddleSpeed;
+    }
+
     private class EventListener extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e) {
-            if (game.isPuckFrozen()) {
-                int code = e.getKeyCode();
-                Player server = playerManager.getServer();
-                boolean validServe = (server == playerManager.getPlayers().get(0)
-                        && (code == KeyEvent.VK_W || code == KeyEvent.VK_S))
-                        || (server == playerManager.getPlayers().get(1)
-                        && (code == KeyEvent.VK_UP || code == KeyEvent.VK_DOWN));
-                if (validServe) {
-                    game.unfreezePuckOnServe();
-                }
-            }
+    public void keyPressed(KeyEvent e) {
+    
+        if (game.isPuckFrozen()) {
+             int keyCode = e.getKeyCode();
+             Player server = playerManager.getServer();
+
+
+        boolean isFirstPlayerServing = server == playerManager.getPlayers().get(0)
+                && (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S);
+
+        
+        boolean isSecondPlayerServing = server == playerManager.getPlayers().get(1)
+                && (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN);
+
+        
+        if (isFirstPlayerServing || isSecondPlayerServing) {
+            game.unfreezePuckOnServe();
+        }
+    }
+
+
 
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_W -> p1.setDirection(-paddleSpeed);
@@ -169,8 +180,4 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
-    public void setPaddleSpeed(int paddleSpeed) {
-        this.paddleSpeed = paddleSpeed + 6;
-        
-    }   
 }

@@ -16,7 +16,7 @@ public class GameFrame extends JFrame {
 
     private Clip menuMusic;
     private Clip gameMusic;
-    
+
     public GameFrame() {
         setTitle("BounceBlitz");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +26,7 @@ public class GameFrame extends JFrame {
 
         MainMenu menu = new MainMenu(this);
         modepanel = new MainMenu.ModeSelectionPanel(this);
-        settingsPanel = new MainMenu.SettingsPanel(this, gamePanel);
+        settingsPanel = new MainMenu.SettingsPanel(this);
 
         mainPanel.add(menu, "Menu");
         mainPanel.add(modepanel, "ModeSelection");
@@ -37,68 +37,64 @@ public class GameFrame extends JFrame {
         setResizable(false);
         setVisible(true);
 
-        // Start menu music
-        playMenuMusic("bounceblitz/resources/menu.wav");
-        
-        cardLayout.show(mainPanel, "Menu");
+        setScreen("Menu");
+        pack();
+    }
+
+    public void setScreen(String screen) {
+        if (menuMusic != null && menuMusic.isRunning()) menuMusic.stop();
+        if (gameMusic != null && gameMusic.isRunning()) gameMusic.stop();
+
+        switch (screen) {
+            case "Menu" -> {
+                playMenuMusic("bounceblitz/resources/menu.wav");
+                cardLayout.show(mainPanel, "Menu");
+            }
+            case "ModeSelection" -> {
+                playMenuMusic("bounceblitz/resources/menu.wav");
+                cardLayout.show(mainPanel, "ModeSelection");
+            }
+            case "SettingsPanel" -> {
+                playMenuMusic("bounceblitz/resources/menu.wav");
+                cardLayout.show(mainPanel, "SettingsPanel");
+            }
+            case "Game" -> {
+                playGameMusic("bounceblitz/resources/game.wav");
+                cardLayout.show(mainPanel, "Game");
+                SwingUtilities.invokeLater(() -> {
+                    if (gamePanel != null) gamePanel.requestFocusInWindow();
+                });
+            }
+            case "NameInputPanel" -> {
+                playMenuMusic("bounceblitz/resources/menu.wav");
+                cardLayout.show(mainPanel, "NameInputPanel");
+            }
+        }
         pack();
     }
 
     public void showGame(String name1, String name2, int format) {
-        // Stop menu music and start game music
-        stopMenuMusic();
-        playGameMusic("bounceblitz/resources/game.wav");
-
-        gamePanel = new GamePanel(name1, name2, format);
+        gamePanel = new GamePanel(name1, name2, format, this);
         mainPanel.add(gamePanel, "Game");
-        cardLayout.show(mainPanel, "Game");
-        pack();
-        SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
+        setScreen("Game");
     }
 
     public void modeSelection() {
-        cardLayout.show(mainPanel, "ModeSelection");
+        setScreen("ModeSelection");
     }
 
     public void setNameInputPanel(int format) {
         nameInputPanel = new MainMenu.NameInputPanel(this, format);
         mainPanel.add(nameInputPanel, "NameInputPanel");
-        cardLayout.show(mainPanel, "NameInputPanel");
+        setScreen("NameInputPanel");
     }
 
     public void showMainMenu() {
-        cardLayout.show(mainPanel, "Menu");
+        setScreen("Menu");
     }
 
     public void showSettings() {
-        cardLayout.show(mainPanel, "SettingsPanel");
-    }
-    private void playMenuMusic(String filePath) {
-        menuMusic = playMusic(filePath);
-    }
-
-    private void stopMenuMusic() {
-        if (menuMusic != null && menuMusic.isRunning()) {
-            menuMusic.stop();
-        }
-    }
-
-    public void playMenuMusicAgain() {
-        playMenuMusic("bounceblitz/resources/menu.wav");
-    }
-
-    public void playGameMusicAgain() {
-        playMenuMusic("bounceblitz/resources/game.wav");
-    }
-
-    private void playGameMusic(String filePath) {
-        gameMusic = playMusic(filePath);
-    }
-
-    public void stopGameMusic() {
-        if (gameMusic != null && gameMusic.isRunning()) {
-            gameMusic.stop();
-        }
+        setScreen("SettingsPanel");
     }
 
     private Clip playMusic(String filePath) {
@@ -107,12 +103,23 @@ public class GameFrame extends JFrame {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the music
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
             return clip;
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
+    private void playMenuMusic(String filePath) {
+        menuMusic = playMusic(filePath);
+    }
+
+    private void playGameMusic(String filePath) {
+        gameMusic = playMusic(filePath);
+    }
+
+    public GamePanel getGamePanel() {
+        return this.gamePanel;
+    }
 }

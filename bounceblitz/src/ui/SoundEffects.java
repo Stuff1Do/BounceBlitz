@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class SoundEffects {
 
-    // Method to play a sound file
+    
     public static void playSound(String soundFile) {
         try {
             File file = new File(soundFile);

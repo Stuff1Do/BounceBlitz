@@ -6,12 +6,11 @@ import utils.Randomizer;
 public class Game {
 	Puck puck;
 	PlayerManager playerManager;
-	int panelWidth;
 	boolean puckFrozen = false;
-	public Game(Puck puck, PlayerManager playerManager, int panelWidth) {
+	public Game(Puck puck, PlayerManager playerManager) {
 			this.puck = puck;
 			this.playerManager = playerManager;
-			this.panelWidth = panelWidth;
+	
 	}
 	
 	
@@ -20,12 +19,10 @@ public class Game {
 	}
 	
 	public void freezePuck() {
-		puckFrozen =true;
+		puckFrozen = true;
 	}
 	public void engine() {
 		if(!puckFrozen) {
-			
-		
 		
 		puck.move();
 		
@@ -39,14 +36,12 @@ public class Game {
 			
 			puckFrozen = true;
 			p2.addPoint();
-			playerManager.switchServer();
 			puck.resetPosition();
 			
-		}else if (Collisions.checkGoalRight(puck) && puck.getX() > panelWidth) {
+		}else if (Collisions.checkGoalRight(puck) && puck.getX() > 500) {
 			
 			puckFrozen = true;
             p1.addPoint();
-            playerManager.switchServer();
             puck.resetPosition();
             
         	}

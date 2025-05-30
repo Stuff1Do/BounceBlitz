@@ -26,10 +26,7 @@ public class PlayerManager {
 	    this.server = player;
 	}
 	
-	public void switchServer() {
-		server = server.equals(players.get(0))
-				? players.get(1) : players.get(0);
-	}
+	
 	
 	public Player getWinningPlayer() {
 		if(player1.getScore() > player2.getScore()) {
