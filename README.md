@@ -21,18 +21,6 @@ Object-Oriented: Entities like Puck, Paddle, and GameEngine simplify updates and
 
 ---
 
-## Project Structure
-BounceBlitz/
-├── src/
-│ └── ... # Java source files (main game loop, entities, physics)
-├── assets/
-│ └── ... # Game assets: images, sounds, etc.
-├── README.md # This file
-└── build/ # Compiled classes or jar output (if generated)
-
-
----
-
 ## ⚙️ Requirements
 
 - Java Development Kit (JDK) 8 or newer.
@@ -54,11 +42,6 @@ java -cp build Main
   1. Import the project as a Java application.
   2. Ensure src/ is marked as the source folder.
   3. Run the Main class.
-  
----
-Gameplay Controls
-  Move paddle: Arrow keys (Left/Right/Up/Down)
-  `More instructions in menu.`
 
 ---
 Contributions are welcome!
